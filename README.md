@@ -1,22 +1,33 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Code on the Go (CoGo) Offline & Online Build Guide
 
-# Run and deploy your AI Studio app
+प्रोजेक्ट में **Offline Build** के लिए `offline-repo` फ़ोल्डर जोड़ दिया गया है, जिसमें `guava-33.3.1-jre.jar` और उससे संबंधित सभी जरूरी फाइल्स शामिल हैं।
 
-This contains everything you need to run your app locally.
+### Offline Build सेटअप:
 
-View your app in AI Studio: https://ai.studio/apps/718a4f96-c81f-4162-8af0-834a4f83a170
+1. **`offline-repo` फ़ोल्डर:**
+   - प्रोजेक्ट के रूट (Root) में `offline-repo` फ़ोल्डर मौजूद है।
+   - इसमें `com/google/guava/...` की सभी फाइल्स हैं।
 
-## Run Locally
+2. **`settings.gradle.kts`:**
+   - इसमें `maven { url = uri("${rootDir}/offline-repo") }` जोड़ा गया है, जिससे Gradle बिना इंटरनेट के भी लोकल फाइलों से बिल्ड कर लेता है।
 
-**Prerequisites:**  [Android Studio](https://developer.android.com/studio)
+3. **`build.gradle.kts`:**
+   - इसके `buildscript` में भी `offline-repo` जोड़ा गया है।
 
+---
 
-1. Open Android Studio
-2. Select **Open** and choose the directory containing this project
-3. Allow Android Studio to fix any incompatibilities as it imports the project.
-4. Create a file named `.env` in the project directory and set `GEMINI_API_KEY` in that file to your Gemini API key (see `.env.example` for an example)
-5. Remove this line from the app's `build.gradle.kts` file: `signingConfig = signingConfigs.getByName("debugConfig")`
-6. Run the app on an emulator or physical device
-7. If you have already published your app in AI Studio, please [request upload key reset](https://support.google.com/googleplay/android-developer/answer/9842756#zippy=%2Crequest-an-upload-key-reset) in Google Play Console.
+### Code on the Go में ऑफलाइन बिल्ड करने के 2 तरीके:
+
+#### तरीका 1 (सबसे आसान - प्रोजेक्ट के अंदर से):
+- सुनिश्चित करें कि आपके प्रोजेक्ट फ़ोल्डर (`/storage/emulated/0/CodeOnTheGoProjects/applegrow-ai...`) के अंदर `offline-repo` फ़ोल्डर मौजूद है।
+- `settings.gradle.kts` और `build.gradle.kts` में `maven { url = uri("${rootDir}/offline-repo") }` वाली लाइन होनी चाहिए।
+- Code on the Go में **Build** बटन दबाएं।
+
+#### तरीका 2 (Code on the Go के लोकल मावेन में कॉपी करना):
+अगर Code on the Go का बिल्ड सिर्फ `/data/data/com.itsaky.androidide/files/home/maven/localMvnRepository` में चेक कर रहा है, तो Code on the Go के **Terminal** में यह 2 कमांड चलाएं:
+
+```bash
+mkdir -p /data/data/com.itsaky.androidide/files/home/maven/localMvnRepository/com/google/guava/guava/33.3.1-jre/
+cp offline-repo/com/google/guava/guava/33.3.1-jre/* /data/data/com.itsaky.androidide/files/home/maven/localMvnRepository/com/google/guava/guava/33.3.1-jre/
+```
+इसके बाद ऑफलाइन बिल्ड 100% सफल हो जाएगा!
