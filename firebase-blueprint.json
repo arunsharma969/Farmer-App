@@ -1,0 +1,49 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile in Horti AI orchard ecosystem",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "fullName": { "type": "string" },
+        "phoneNumber": { "type": "string" },
+        "orchardLocation": { "type": "string" },
+        "role": { "type": "string", "enum": ["ADMIN", "FARMER", "GUEST"] },
+        "status": { "type": "string", "enum": ["PENDING_APPROVAL", "APPROVED", "REJECTED"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "fullName", "phoneNumber", "role", "status", "createdAt"]
+    },
+    "ConsultancyBooking": {
+      "title": "ConsultancyBooking",
+      "description": "Consultancy booking request with Arun Sharma",
+      "type": "object",
+      "properties": {
+        "bookingId": { "type": "string" },
+        "userId": { "type": "string" },
+        "farmerName": { "type": "string" },
+        "phoneNumber": { "type": "string" },
+        "location": { "type": "string" },
+        "consultancyType": { "type": "string" },
+        "orchardArea": { "type": "string" },
+        "queryDescription": { "type": "string" },
+        "preferredDate": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["bookingId", "userId", "farmerName", "phoneNumber", "consultancyType", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserProfile" },
+      "description": "User account documents stored per user"
+    },
+    "/users/{userId}/consultancies/{bookingId}": {
+      "schema": { "$ref": "#/entities/ConsultancyBooking" },
+      "description": "Consultancy requests submitted by the user"
+    }
+  }
+}

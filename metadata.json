@@ -1,0 +1,6 @@
+{
+  "name": "Horti AI",
+  "description": "Horti AI (हॉर्टी एआई) - वैश्विक सेब बागवानी AI सहायक व परामर्श केंद्र | उच्च-घनत्व HDP प्रबंधन, नर्सरी, रोग निदान, वीडियो रील्स व विशेषज्ञ परामर्श।",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
